@@ -29,5 +29,11 @@ variable "ec2_sg" {
 
 variable "photobucketname" {
 	default = "photo.kilwaphoto.com"
-	description = "The bucket name for photo storage, not for js/html/css files"
+	description = "This bucket is for photo storage, not for js/html/css files"
+}
+
+
+variable "logbucketname"{
+	default = "log.kilwaphoto.com"
+	description = "This bucket is for storing logs"
 }

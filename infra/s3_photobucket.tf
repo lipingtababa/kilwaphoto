@@ -27,8 +27,13 @@ EOF
 		expose_headers  = ["ETag"]
 		max_age_seconds = 3000
 	}
+	logging {
+		target_bucket = "${aws_s3_bucket.log.id}"
+		target_prefix = "photo.kilwaphoto.com/"
+	}
+	tags = {usage="kilwaphoto"}
 }
 
-output "static_site_arn" {
-	value = "${aws_s3_bucket.static_file_site.arn}"
+output "static_site_url" {
+	value = "${aws_s3_bucket.static_file_site.bucket_regional_domain_name}"
 }
