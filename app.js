@@ -1,6 +1,6 @@
-var albumBucketName = "kilwaphotoindex";
-var bucketRegion = "us-west-2";
-var IdentityPoolId = "us-west-2:fe91f0ba-4210-4eca-86f5-3e871bacbd6a";
+var albumBucketName = "BUCKET_NAME";
+var bucketRegion = "AWS_REGION";
+var IdentityPoolId = "IDENTITY_POOL_ID";
 
 AWS.config.update({
   region: bucketRegion,
