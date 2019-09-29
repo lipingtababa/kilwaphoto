@@ -12,8 +12,8 @@ resource "aws_cognito_user_pool_client" "kilwaclient" {
 	#supported_identity_providers	= ["cognito"]
 }
 
-resource "aws_cognito_identity_pool" "kilwauser" {
-	identity_pool_name               = "kilwauser"
+resource "aws_cognito_identity_pool" "kilwa" {
+	identity_pool_name               = "kilwausernew"
 	allow_unauthenticated_identities = true
 
 	cognito_identity_providers {
@@ -31,8 +31,17 @@ resource "aws_cognito_identity_pool" "kilwauser" {
 		command = "sed -i 's/AWS_REGION/${var.region}/' ../app.js"
 	}
 	provisioner "local-exec" {
-		command = "sed -i 's/IDENTITY_POOL_ID/${aws_cognito_identity_pool.kilwauser.id}/' ../app.js"
+		command = "sed -i 's/IDENTITY_POOL_ID/${aws_cognito_identity_pool.kilwa.id}/' ../app.js"
 	}
+
+	provisioner "local-exec" {
+		command = "aws s3 cp ../app.js s3://${var.photobucketname}/app.js"
+	}
+
+	provisioner "local-exec" {
+		command = "aws s3 cp ../index.html s3://${var.photobucketname}/index.html"
+	}
+
 	tags = {usage="kilwaphoto"}
 }
 
@@ -45,5 +54,5 @@ output "user_client_id" {
 }
 
 output "identity_pool_id"{
-	value = "${aws_cognito_identity_pool.kilwauser.id}"
+	value = "${aws_cognito_identity_pool.kilwa.id}"
 }

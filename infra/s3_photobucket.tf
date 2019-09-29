@@ -35,5 +35,5 @@ EOF
 }
 
 output "static_site_url" {
-	value = "${aws_s3_bucket.static_file_site.bucket_regional_domain_name}"
+	value = "${aws_s3_bucket.static_file_site.website_endpoint}"
 }
