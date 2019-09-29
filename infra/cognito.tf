@@ -22,6 +22,9 @@ resource "aws_cognito_identity_pool" "kilwauser" {
 		server_side_token_check = false
 	}
 	provisioner "local-exec" {
+		command = "cp ../app_template.js ../app.js"
+	}
+	provisioner "local-exec" {
 		command = "sed -i 's/BUCKET_NAME/${var.photobucketname}/' ../app.js"
 	}
 	provisioner "local-exec" {
