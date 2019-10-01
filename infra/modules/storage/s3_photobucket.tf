@@ -1,16 +1,16 @@
 resource "aws_s3_bucket" "static_file_site" {
-	bucket = "${var.photobucketname}"
-	acl    = "public-read-write"
+	bucket = "${var.codebucketname}"
+	acl    = "public-read"
 	policy = <<EOF
 {
     "Version": "2012-10-17",
     "Statement": [
         {
-		"Sid": "PublicWriteObject",
+		"Sid": "PublicObject",
 		"Effect": "Allow",
 		"Principal": "*",
-		"Action": ["s3:GetObject","s3:PutObject","s3:PutObjectTagging"],
-		"Resource": ["arn:aws:s3:::${var.photobucketname}/*", "arn:aws:s3:::${var.photobucketname}"]
+		"Action": ["s3:GetObject"],
+		"Resource": ["arn:aws:s3:::${var.codebucketname}/*", "arn:aws:s3:::${var.codebucketname}"]
         }
     ]
 }
@@ -29,7 +29,7 @@ EOF
 	}
 	logging {
 		target_bucket = "${aws_s3_bucket.log.id}"
-		target_prefix = "photo.kilwaphoto.com/"
+		target_prefix = "${var.codebucketname}"
 	}
 	tags = {usage="kilwaphoto"}
 }
