@@ -1,6 +1,9 @@
 resource "aws_s3_bucket" "static_file_site" {
 	bucket = "${var.codebucketname}"
 	acl    = "public-read"
+
+	#This bucket could be deleted by force since it contains just reproducible code (js, html & css etc)
+	force_destroy = true
 	policy = <<EOF
 {
     "Version": "2012-10-17",
