@@ -22,7 +22,30 @@ module "users" {
 	user_pool_name = "kilwafans"
 }
 
+
+data "template_file" "appjs" {
+	template = "${file("${path.module}/../../frontend/app_template.js")}"
+	vars = {
+		BUCKET_NAME	=  "photo${var.projectname}",
+		AWS_REGION	=	var.region	
+		IDENTITY_POOL_ID	=	module.users.identity_pool_id
+	}
+}
+
+resource "local_file" "appjs" {
+    content     = data.template_file.appjs.rendered
+    filename = "${path.module}/../../frontend/app.js"
+}
+
 resource "null_resource" "void"{
+
+	triggers = {
+		copy = "copy"
+	}
+
+	provisioner "local-exec" {
+		command = "aws s3 cp ../../frontend/app.js s3://code${var.projectname}/app.js"
+	}
 
 	provisioner "local-exec" {
 		command = "aws s3 cp ../../frontend/app.js s3://code${var.projectname}/app.js"
