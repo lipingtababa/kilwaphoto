@@ -2,6 +2,10 @@ variable region {
 	default = "us-west-2"
 }
 
+variable force_destroy {
+	description = "remove the s3 bucket even though there are files inside"
+}
+
 variable projectname {
 	default = "kilwaphoto2"
 }
@@ -9,6 +13,7 @@ variable projectname {
 module "storage" {
 	source = "../modules/storage"
 	region = var.region
+	force_destroy = var.force_destroy
 
 	photobucketname	= "photo${var.projectname}"
 	codebucketname	= "code${var.projectname}"
